@@ -13,7 +13,6 @@
 - name: apply common configuration to all nodes
   hosts: localhost
   roles:
-    - role: set-kube-config
     - role: web
     - role: db
 
