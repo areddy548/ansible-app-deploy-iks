@@ -1,3 +1,22 @@
+- name: Test for 2.9 version
+  vars:
+    msg: |-
+          ######################################################################
+          Spectrum Scale packages were updated. Once all nodes in the cluster
+          run the new version, consider updating configuration information to
+          the latest format that is supported by the currently installed level:
+            mmchconfig release=LATEST
+          Furthermore, consider updating file systems to the latest format that
+          is supported by the currently installed level:
+            mmchfs fs1 -V full
+          Remember that nodes in remote clusters running an older version will
+          no longer be able to mount the file system!
+          ######################################################################
+  debug:
+    msg: "{{ msg.split('\n') }}"
+  when: true in ansible_play_hosts | map('extract', hostvars, 'scale_install_updated') | list
+
+
 - name: Create Web Application
   k8s:
     kubeconfig: "{{ kube_config.stdout }}"
